@@ -17,6 +17,6 @@ jobs:
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env:
-          SONAR_TOKEN: ${{ 4ff4a9301ff063368b5d5e1841f225c0a8eb7168 }}
+          SONAR_TOKEN: 4ff4a9301ff063368b5d5e1841f225c0a8eb7168
         with:
           projectBaseDir: .
