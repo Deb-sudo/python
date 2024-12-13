@@ -18,5 +18,6 @@ jobs:
         env:
           SONAR_TOKEN: 4ff4a9301ff063368b5d5e1841f225c0a8eb7168  # Use the secret for the token
         with:
-          projectKey: deb-sudo-sast  # Replace with your actual project key
-          organization: Deb-sudo SAST # Replace with your actual organization name
+          args：>
+            -Dsonar.organization=Deb-sudo SAST
+            -Dsonar-projectKey=deb-sudo-sast
