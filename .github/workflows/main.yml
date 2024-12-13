@@ -19,5 +19,5 @@ jobs:
           SONAR_TOKEN: 4ff4a9301ff063368b5d5e1841f225c0a8eb7168  # Use the secret for the token
         with:
           args：>
-            -Dsonar.organization=Deb-sudo SAST
-            -Dsonar-projectKey=deb-sudo-sast
+            -sonar.organization=Deb-sudo SAST
+            -sonar-projectKey=deb-sudo-sast
