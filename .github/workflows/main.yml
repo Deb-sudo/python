@@ -1,23 +1,21 @@
-name: Build
 on:
+  # Trigger analysis when pushing to your main branches, and when creating a pull request.
   push:
     branches:
       - main
   pull_request:
-    types: [opened, synchronize, reopened]
+      types: [opened, synchronize, reopened]
+
+name: Main Workflow
 jobs:
   sonarqube:
-    name: SonarQube
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4
-        env:
-          SONAR_TOKEN: 4ff4a9301ff063368b5d5e1841f225c0a8eb7168  # Use the secret for the token
-        with:
-          args：>
-            -sonar.organization=Deb-sudo SAST
-            -sonar-projectKey=deb-sudo-sast
+    - uses: actions/checkout@v4
+      with:
+        # Disabling shallow clones is recommended for improving the relevancy of reporting
+        fetch-depth: 0
+    - name: SonarQube Scan
+      uses: sonarsource/sonarcloud-github-action@ v3.1.0. # Ex: v4.0.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
+      env:
+        SONAR_TOKEN: cae8d160e9f72cbf43555f50861dd377cd964e7f
