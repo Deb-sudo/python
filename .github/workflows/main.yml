@@ -23,13 +23,13 @@ jobs:
           SONAR_TOKEN: cae8d160e9f72cbf43555f50861dd377cd964e7f
 
       # Step 3: Enforce quality gate
-      - name: Enforce Quality Gate
+      - name: Validate Quality Gate
         run: |
-          STATUS=$(curl -s -u "cae8d160e9f72cbf43555f50861dd377cd964e7f" "https://sonarcloud.io/api/qualitygates/project_status?projectKey=Deb-sudo_python" | jq -r '.projectStatus.status')
+          STATUS=$(curl -s -u "$cae8d160e9f72cbf43555f50861dd377cd964e7f:" "https://sonarcloud.io/api/qualitygates/project_status?projectKey=Deb-sudo_python" | jq -r '.projectStatus.status')
+          echo "SonarCloud Quality Gate Status: $STATUS"
           if [ "$STATUS" != "OK" ]; then
             echo "Quality Gate failed with status: $STATUS"
             exit 1
           fi
-        env:
-          SONAR_TOKEN: cae8d160e9f72cbf43555f50861dd377cd964e7f
+        shell: bash
 
