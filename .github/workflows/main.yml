@@ -1,23 +1,35 @@
 on:
-  # Trigger analysis when pushing to your main branches, and when creating a pull request.
+  # Trigger analysis when pushing to your main branches and creating a pull request
   push:
     branches:
       - main
   pull_request:
-      types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened]
 
 name: Main Workflow
 jobs:
   sonarqube:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        # Disabling shallow clones is recommended for improving the relevancy of reporting
-        fetch-depth: 0
-    - name: SonarQube Scan
-      uses: sonarsource/sonarcloud-github-action@v3.1.0 # Ex: v4.0.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
-      env:
-        SONAR_TOKEN: cae8d160e9f72cbf43555f50861dd377cd964e7f
+      # Step 1: Checkout the repository
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Recommended for better reporting
 
-        
+      # Step 2: Run SonarCloud scan
+      - name: SonarQube Scan
+        uses: sonarsource/sonarcloud-github-action@v3.1.0 # Use the latest stable version
+        env:
+          SONAR_TOKEN: cae8d160e9f72cbf43555f50861dd377cd964e7f
+
+      # Step 3: Enforce quality gate
+      - name: Enforce Quality Gate
+        run: |
+          STATUS=$(curl -s -u "cae8d160e9f72cbf43555f50861dd377cd964e7f:" "https://sonarcloud.io/api/qualitygates/project_status?projectKey=Deb-sudo_python" | jq -r '.projectStatus.status')
+          if [ "$STATUS" != "OK" ]; then
+            echo "Quality Gate failed with status: $STATUS"
+            exit 1
+          fi
+        env:
+          SONAR_TOKEN: cae8d160e9f72cbf43555f50861dd377cd964e7f
+
