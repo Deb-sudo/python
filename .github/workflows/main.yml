@@ -23,7 +23,7 @@ jobs:
     - name: Check SonarCloud Quality Gate
       uses: sonarsource/sonarcloud-github-action@v3.1.0
       with:
-          args: qualitygate
+          args: Quality Gates
       env:
           SONAR_TOKEN: cae8d160e9f72cbf43555f50861dd377cd964e7f
         
