@@ -3,7 +3,7 @@ name: SonarCloud Debug Workflow
 on:
   push:
     branches:
-      - main
+      - '**'
 
 jobs:
   sonarqube:
